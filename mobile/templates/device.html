@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devices | Sales</title>
+    <style>
+        .list .desk{
+            float:left;
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    <section class="list">
+    {% for device in device %}
+    <div>
+        
+        <div class="desk" style='margin-left: 30px; width:180px; float-auto;'>
+            <img style='width: 180px; height:290px; margin-left: 30px; margin-top: 20px; border-radius: 5px;' src="{{ device.image.url }}" alt="">
+            <h4 align="center" style="margin-top:0px;">{{ device.name }}</h4>
+            <p align="center" style="margin-top:-10px;">KSH {{ device.price }}</p>
+            {% if user.is_superuser %}
+            <a href="{% url 'deldevice' device.id %}"><p>delete</p></a>
+            <a href="{% url 'update' device.id %}"><p>Update</p></a>
+            {% endif %}
+            <a href="{% url 'view' device.id %}" align="center"><button style="border-radius: 5px; width:180px; height: 30px; margin-left: 30px; background-color:green; border:none;">view item</button></a>
+        
+        </div>
+    </div>
+    {% endfor %}
+    </section>
+<section style='margin-top: 30px; float:left; width:100%;' >
+
+    {% include 'footer.html' %}
+    
+
+</section>
+    
+</body>
+</html>

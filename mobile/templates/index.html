@@ -1,0 +1,232 @@
+<?php include 'header.php'; ?>
+
+<script>
+    function countdowntimer(id, time) {
+        // Set the date we're counting down to
+        var countDownDate = new Date(time).getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now an the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="demo"
+            document.getElementById("countdowntime" + id).innerHTML = "<h6 style='color: red;'>Time Remaining</> <br><b>" + days + "Days " + hours + "hrs " + minutes + "min " + seconds + "sec</b></h6>";
+
+            // If the count down is over, write some text 
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdowntime" + id).innerHTML = "<center><b  style='color: red;'>EXPIRED</b></center>";
+            }
+        }, 1000);
+
+    }
+</script>
+    <section class="home-classic-slider slider-arrow">
+        <div class="banner-part" style="background:linear-gradient(108deg, rgba(0,0,0,0.76234243697479) 22%, rgba(255,255,255,0) 100%), url(images/home/classic/01.jpg) no-repeat center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="banner-content">
+                            <h2 class="mb-2" style="color:#fff; font-size:50px;">STORAGE HACKED</h2>
+                            <p> Buy it Less, Auction Live</p>
+                            <div class="banner-btn"><a class="btn btn-inline" href="shop.php"><i
+                                        class="fas fa-shopping-basket"></i><span>shop now</span></a><a
+                                    class="btn btn-outline" href="selectcategory.php"><i
+                                        class="icofont-sale-discount"></i><span>sell now</span></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="banner-part" style="background:linear-gradient(108deg, rgba(0,0,0,0.76234243697479) 22%, rgba(255,255,255,0) 100%), url(images/home/classic/02.jpg) no-repeat center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="banner-content">
+                            <h2 class="mb-2" style="color:#fff; font-size:50px;">SELL IT LIVE</h2>
+                            <p>Buy More, Save More!</p>
+                            <div class="banner-btn"><a class="btn btn-inline" href="shop.php"><i
+                                        class="fas fa-shopping-basket"></i><span>shop now</span></a><a
+                                    class="btn btn-outline" href="selectcategory.php"><i
+                                        class="icofont-sale-discount"></i><span>sell now</span></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="banner-part" style="background:linear-gradient(108deg, rgba(0,0,0,0.76234243697479) 22%, rgba(255,255,255,0) 100%), url(images/home/classic/03.jpg) no-repeat center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="banner-content">
+                            <h2 class="mb-2" style="color:#fff; font-size:50px;">SUPPLY CHAIN HACKED</h2>
+                            <p>No more Hustle!</p>
+                            <div class="banner-btn"><a class="btn btn-inline" href="shop.php"><i
+                                        class="fas fa-shopping-basket"></i><span>shop now</span></a><a
+                                    class="btn btn-outline" href="selectcategory.php"><i
+                                        class="icofont-sale-discount"></i><span>sell now</span></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="banner-part" style="background:linear-gradient(108deg, rgba(0,0,0,0.76234243697479) 22%, rgba(255,255,255,0) 100%), url(images/home/classic/04.jpg) no-repeat center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="banner-content">
+                            <h2 class="mb-2" style="color:#fff; font-size:50px;">SECURE THE GOODS</h2>
+                            <p>Buy Transit Insuarance!</p>
+                            <div class="banner-btn">
+                                <a
+                                    class="btn btn-outline" href="selectcategory.php"><i
+                                        class="icofont-sale-discount"></i><span>Buy Insuarance</span></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="section suggest-part">
+    <div class="container">
+        <div class="section-heading">
+            <h2 class="align-center">Categories</h2>
+        </div>
+        
+        <ul class="suggest-slider slider-arrow">
+        <?php
+        $sql = "select * from category WHERE status='Active'";
+        $qsql = mysqli_query($con, $sql);
+        while ($rs = mysqli_fetch_array($qsql)) {
+            if (file_exists('imgcategory/' . $rs['category_icon'])) {
+                $imgname = 'imgcategory/' . $rs['category_icon'];
+            } else {
+                $imgname = 'img/No-Image-Available.png';
+            } ?>
+            <li>
+                <a class="suggest-card">
+                <img src="<?php echo $imgname; ?>"  style="height:200px; width:250px;" alt="Image">
+                    <h5><?php echo $rs['category_name']; ?></h5>
+                </a>
+            </li>
+            <?php
+        }
+        ?>
+        </ul>
+    </div>
+</section>
+<section class="section feature-part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2>Featured Live Sale</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2">
+            <?php
+            $i = 0;
+            $sqlproduct =
+                "select product.*,category.category_name from product LEFT JOIN category on product.category_id=category.category_id WHERE product.status='Active' AND product.customer_id!='0' order by product.product_id DESC limit 0,4";
+            $qsqlproduct = mysqli_query($con, $sqlproduct);
+            while ($rsproduct = mysqli_fetch_array($qsqlproduct)) {
+
+                $i++;
+                if (file_exists('imgproduct/' . $rsproduct['product_image'])) {
+                    $imgname = 'imgproduct/' . $rsproduct['product_image'];
+                } else {
+                    $imgname = 'images/noimage.gif';
+                }
+                ?>
+                <div class="col">
+                    <div class="feature-card">
+                        <div class="feature-media">
+                            <div class="feature-label" >
+                                <?php 
+                                    if($rsproduct['sale_status'] == 'Live'){
+                                ?>
+                                        <label class='label-text feat bg-success px-2 py-2'>
+                                            <?php echo $rsproduct['sale_status']; ?>
+                                        </label> 
+                                        <?php
+                                    } else {
+                                        ?>
+                                        
+                                        <label class='label-text feat bg-danger px-2 py-2>
+                                            <?php echo $rsproduct['sale_status']; ?>
+                                        </label>
+                                    <?php
+                                    }
+                                ?>
+                                
+                            </div>
+                            <button class="feature-wish wish px-2 py-2"><i class="fas fa-heart"></i></button>
+                            <a href="single.php?productid=<?php echo $rsproduct[0]; ?>">
+                                <img src="<?php echo $imgname; ?>" alt="product" style="width:150px; height:150px; border-radius:5px;">
+                            </a>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-name"><a class="product_name" href="single.php?productid=<?php echo $rsproduct[0]; ?>"><?php echo $rsproduct['product_name']; ?></a></h3>
+                            <h6 class="feature-price text-danger">  
+                            <span  style="padding-right:5px; color:green; "> $<?php
+                                        if ($rsproduct['ending_bid'] > $rsproduct['starting_bid']) {
+                                            echo(round($rsproduct['ending_bid'],0,PHP_ROUND_HALF_UP));
+                                        } else {
+                                            echo (round($rsproduct['starting_bid'],0,PHP_ROUND_HALF_UP));
+                                        }
+                                    ?>  </span></h6>
+                            <h6>ICD Location:<span class="px-2 text-success"><?php echo $rsproduct['product_location']; ?></span></h6>
+                            <p class="feature-desc">
+                                <?php 
+                                $desc = $rsproduct['product_description'];
+                                $desc = substr($desc, 0, 100) . '.........';
+                                echo $desc; ?>
+                                
+                                </p>
+                                                           <?php 
+                                //if user is logged in then show the view button else show the see more button which links them to the shop page
+                                if(isset($_SESSION['customer_id'])){
+                                    ?>
+                                    <div class="banner-btn">
+                                         <a class="btn btn-outline" href="single.php?productid=<?php echo $rsproduct[0]; ?>">View Product</a>
+                                    </div>
+                                    <?php
+                                }else{
+                                    ?>
+                            <div class="banner-btn">
+                                         <a class="btn btn-outline" href="single.php?productid=<?php echo $rsproduct[0]; ?>">View Product</a>
+                                    </div>
+                                    <?php
+                                }
+                                ?> 
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+            </div>
+            <div class="row" style="padding-top:100px;">
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-outline" href="shop.php">See More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php include 'footer.php'; ?>
+<!-- 
+ -->
+

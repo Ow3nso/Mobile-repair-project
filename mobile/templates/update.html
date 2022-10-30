@@ -1,0 +1,12 @@
+{% include 'navbar.html' %}
+
+<form action="" method="POST" enctype="multipart/form-data" align="center">
+    {% csrf_token %} 
+
+    {{form.as_p}}
+
+    <input type="submit" value="ADD DEVICE">
+
+</form>
+
+{% include 'footer.html' %}

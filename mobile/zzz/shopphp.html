@@ -1,0 +1,124 @@
+
+
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2">
+                        <?php if (isset($_GET['category'])) {
+                            $categorychecked = [];
+                            $categorychecked = $_GET['category'];
+                            foreach ($categorychecked as $rowcategory) {
+                                $products =
+                                    'SELECT * FROM product WHERE category_id = ' .$rowcategory;
+                                $products_result = mysqli_query($con, $products);
+                                if (mysqli_num_rows($products_result) > 0) {
+                                    foreach ($products_result as $product): ?>
+                            <div class="col">
+                                <div class="product-card">
+                                    <div class="product-media d-flex justify-content-center">
+                                        <div class="product-label">
+                                            <?php
+                                            if($product['sale_status'] == 'Auction') {
+                                                echo "<label class='label-text sale bg-success'>"
+                                                . $product['sale_status'] . "</label>";
+                                            } elseif($product['sale_status'] == 'For Sale') {
+                                                echo "<label class='label-text sale bg-primary'>"
+                                                . $product['sale_status'] . "</label>";
+                                            } else {
+                                                echo "<label class='label-text sale bg-danger'>"
+                                                . $product['sale_status'] . "</label>";
+                                            }
+                                            ?>
+                                        </div>
+                                        <a class="product-image" href="#">
+                                            <img src="imgproduct/<?= $product['product_image'] ?>" style="height:250px; width:300px; border-radius:10px;" alt="product" />
+                                        </a>
+                                    </div>
+                                    <div class="product-content">
+                                        <h5 class="product-name"><a href="#"><?= $product['product_name'] ?></a></h5>
+                                        <?php
+                                            if($product['sale_status'] == 'Auction') {
+                                                echo "<h4 class='product-price'>Starting Bid: <span>$"
+                                                . round($product['starting_bid'],0,PHP_ROUND_HALF_UP) . "</span></h4>";
+                                            } elseif($product['sale_status'] == 'For Sale') {
+                                                echo "<h4 class='product-price'>Value: <span>$"
+                                                . round($product['sale_price'],0,PHP_ROUND_HALF_UP) . "</span></h4>";
+                                            } else {
+                                                echo "<h4 class='product-price'>Starting Bid: <span>$"
+                                                . round($product['starting_bid'],0,PHP_ROUND_HALF_UP) . "</span></h4>";
+                                            }
+                                        ?>
+                                        <h6 class="product-price"><span>
+                                            <p id="countdowntime<?php echo $product[0]; ?>"></p>
+                                            <script type="application/javascript">countdowntimer('<?php echo $product[0]; ?>', '<?php echo date("M d, Y H:i:s",strtotime($product['end_date_time'])); ?>');</script>
+                                        </span></h6>
+                                        <button class="product-add" title="Add to Cart"><i class="fa fa-check-circle" aria-hidden="true"></i><span>Place Bid</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach;
+                                }
+                            }
+                        } else {
+                            $products = 'SELECT * FROM product';
+                            $products_result = mysqli_query($con, $products);
+                            if (mysqli_num_rows($products_result) > 0) {
+                                foreach ($products_result as $product): ?>
+                                
+                            <div class="col">
+                                <div class="product-card">
+                                    <div class="product-media d-flex justify-content-center">
+                                        <div class="product-label">
+                                        <?php
+                                            if($product['sale_status'] == 'Auction') {
+                                                echo "<label class='label-text sale bg-success'>"
+                                                . $product['sale_status'] . "</label>";
+                                            } elseif($product['sale_status'] == 'For Sale') {
+                                                echo "<label class='label-text sale bg-primary'>"
+                                                . $product['sale_status'] . "</label>";
+                                            } else {
+                                                echo "<label class='label-text sale bg-danger'>"
+                                                . $product['sale_status'] . "</label>";
+                                            }
+                                            ?>
+                                        </div>
+                                        <button
+                                            class="product-wish wish"><i class="fas fa-heart"></i></button><a
+                                            class="product-image" href="#">
+                                            <img src="imgproduct/<?= $product['product_image'] ?>" style="height:250px; width:300px; border-radius:10px;" alt="product" /></a>
+                                        </a>
+                                    </div>
+
+                                    <div class="product-content">
+                                        <h5 class="product-name"><a href="#"><?= $product['product_name'] ?></a></h5>
+                                        <!-- //if sale status is auction, show starting bid, if sale status is for sale, show value -->
+                                        <?php
+                                            if($product['sale_status'] == 'Auction') {
+                                                echo "<h4 class='product-price'>Starting Bid: <span>$"
+                                                . round($product['starting_bid'],0,PHP_ROUND_HALF_UP) . "</span></h4>";
+                                            } elseif($product['sale_status'] == 'For Sale') {
+                                                echo "<h4 class='product-price'>Value: <span>$"
+                                                . round($product['sale_price'],0,PHP_ROUND_HALF_UP) . "</span></h4>";
+                                            } else {
+                                                echo "<h4 class='product-price'>Starting Bid: <span>$"
+                                                . round($product['starting_bid'],0,PHP_ROUND_HALF_UP) . "</span></h4>";
+                                            }
+                                        ?>
+                                    <h6 class="product-price"><span>
+                                        <p id="countdowntime<?php echo $product['product_id']; ?>"></p>
+                                        <script type="application/javascript">countdowntimer('<?php echo $product['product_id']; ?>', '<?php echo date("M d, Y H:i:s",strtotime($product['end_date_time'])); ?>');</script>
+                                        </span>
+                                    </h6>
+                                        <a href='single.php?productid=<?php echo $product['product_id']; ?>'>
+                                            <button class="product-add px-2 bg-success" title="Add to Cart"><i class="fa fa-check-circle" aria-hidden="true"></i><span>Place Bid</span></button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php endforeach;
+                            } else {
+                                echo 'No Product Found';
+                            }
+                        } ?>
+                    </div>
+
+
+
